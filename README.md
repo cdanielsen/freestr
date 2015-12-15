@@ -5,5 +5,5 @@
  - Run `npm start`
  - Navigate to `localhost:3000` in a browser. (Should see "Express: Welcome to Express" if everything's working)
 
- ### ToDo/Wishlist
+### ToDo/Wishlist
  See [trello board](https://trello.com/b/K4N9541h/freestr)
