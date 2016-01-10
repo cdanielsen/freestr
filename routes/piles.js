@@ -72,6 +72,7 @@ router.post('/', function(req, res, next) {
   });
 });
 
+/* PUT piles route */
 router.put('/:id', function(req, res, next) {
   var results, pileId, data;
   results = [];
@@ -83,9 +84,32 @@ router.put('/:id', function(req, res, next) {
       done();
       console.log(err);
     }
-  var query = client.query('UPDATE piles SET (name, location, number_of_items) WHERE Id = ($4)', [])
-  })
-
-})
+  client.query('UPDATE piles SET name = $1, location = $2, number_of_items = $3 WHERE Id = $4', [data.name, data.location, data.number_of_items, pileId]);
+  var query = client.query('SELECT * FROM piles WHERE Id = ($1)', [pileId]);
+    query.on('row', function(row) {
+      result = row;
+    });
+    query.on('end', function() {
+      done();
+      return res.json(result);
+    });
+  });
+});
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
