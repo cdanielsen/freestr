@@ -8,7 +8,6 @@ var http = require('http');
 var pg = require('pg');
 
 // router modules
-var routes = require('./routes/index');
 var piles = require('./routes/piles');
 
 var app = express();
@@ -26,7 +25,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // route "middlewear handler" statements? (best terminolgy I could come up with)
-app.use('/', routes);
 app.use('/piles', piles);
 
 // catch 404 and forward to error handler
