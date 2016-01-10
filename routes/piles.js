@@ -59,7 +59,7 @@ router.post('/', function(req, res, next) {
       done();
       console.log(err);
     }
-    var query = client.query('INSERT INTO piles (name, location, number_of_items) VALUES ($1, $2, $3)', [data.name, data.location, data.items]);
+    client.query('INSERT INTO piles (name, location, number_of_items) VALUES ($1, $2, $3)', [data.name, data.location, data.items]);
 
     var query = client.query('SELECT * FROM piles');
     query.on('row', function(row) {
@@ -71,5 +71,21 @@ router.post('/', function(req, res, next) {
     });
   });
 });
+
+router.put('/:id', function(req, res, next) {
+  var results, pileId, data;
+  results = [];
+  pileId = req.params.id;
+  data = req.body;
+
+  pg.connect(conString, function(err, client, done) {
+    if (err) {
+      done();
+      console.log(err);
+    }
+  var query = client.query('UPDATE piles SET (name, location, number_of_items) WHERE Id = ($4)', [])
+  })
+
+})
 
 module.exports = router;
