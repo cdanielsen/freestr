@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": false,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon ./bin/www",
+    "preseed_db": "dropdb --if-exists freestr",
+    "seed_db": "psql -f ./models/db.sql"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

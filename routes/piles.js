@@ -5,6 +5,7 @@ var dbConfig = require('../config/db');
 var router = express.Router();
 var conString = dbConfig.conString;
 
+
 /* LIST piles route */
 router.get('/', function(req, res, next) {
   var results = [];
@@ -50,6 +51,7 @@ router.get('/:id', function(req, res, next) {
 /* POST piles route */
 router.post('/', function(req, res, next) {
   var results = [];
+  console.log(req.body);
   var data = {name: req.body.name,
               location: req.body.location,
               items: req.body.number_of_items};
@@ -65,6 +67,30 @@ router.post('/', function(req, res, next) {
     query.on('row', function(row) {
       results.push(row);
     });
+    query.on('end', function() {
+      done();
+      return res.json(results);
+    });
+  });
+});
+
+/* DELETE piles route */
+router.delete('/:id', function(req, res, next) {
+  var results = [];
+  var target = parseInt(req.params.id);
+  pg.connect(conString, function (err, client, done) {
+    if (err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+    client.query(`DELETE FROM piles WHERE id=${target}`);
+    var query = client.query("SELECT * FROM piles ORDER BY ID DESC");
+
+    query.on('row', function(row) {
+      results.push(row);
+    });
+
     query.on('end', function() {
       done();
       return res.json(results);
